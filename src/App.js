@@ -14,6 +14,7 @@ import { Context } from "./Context";
 function App() {
     let navigate = useNavigate();
     const [name, setName] = useState("");
+
     const [username, setUsername] = useState("");
 
 
@@ -22,12 +23,7 @@ function App() {
             <Button variant="contained" type={'button'} style={{background: 'darkslategrey', padding: 10, margin: 10}} onClick={()=> {navigate("/register")}}>Register</Button>
             <Button variant="contained" type={'button'} style={{background: 'darkslategrey', padding: 10, margin: 10}} onClick={()=> {navigate("/login")}}>Login</Button>
             <Button variant="contained" type={'button'} style={{background: 'darkslategrey', padding: 10, margin: 10}} onClick={()=> {navigate("/profile")}}>Profile</Button>
-            {/*<div>*/}
-            {/*    <Context.Provider value={{ name, setName, username, setUsername }}>*/}
-            {/*        <Profile />*/}
-            {/*        <Edit />*/}
-            {/*    </Context.Provider>*/}
-            {/*</div>*/}
+
             <Context.Provider value={{ name, setName, username, setUsername }}>
                 <Routes>
                     <Route path="/register" element={<Register />} />
