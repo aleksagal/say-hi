@@ -1,7 +1,9 @@
 .App {
   text-align: center;
-  background: linear-gradient(208.81deg, rgba(221, 213, 144, 0.32) 29.12%, rgba(151, 109, 115, 0.32) 75.11%, rgba(95, 40, 115, 0.32) 98.1%);
-  height: 100vh;
+  /*background: linear-gradient(208.81deg, rgba(221, 213, 144, 0.32) 29.12%, rgba(151, 109, 115, 0.32) 75.11%, rgba(95, 40, 115, 0.32) 98.1%);*/
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .App-logo {
@@ -38,5 +40,68 @@
   to {
     transform: rotate(360deg);
   }
+}
+/*#menu MuiButtonBase-root-MuiMenuItem-root.Mui-selected {*/
+/*  background-color: #F4F2DC;*/
+/*  color: #1A2027;*/
+/*}*/
+/*.MuiButton-contained {*/
+/*  text-transform: lowercase !important;*/
+/*}*/
+
+/*.Mui-selected {*/
+/*  font-family: 'Lato Black';*/
+/*  color: blueviolet;*/
+/*  !*padding: 1vh;*!*/
+/*  !*margin: 1vh;*!*/
+/*  !*width: 20vh;*!*/
+/*  !*border-radius: 0.5rem;*!*/
+/*  !*color: black;*!*/
+/*}*/
+
+/*.selected-item {*/
+/*  background-color: #3f51b5; !* Na przykład kolor z palety primary *!*/
+/*  color: white;*/
+/*}*/
+.App button{
+  background-color: #ABC357;
+  padding: 1vh;
+  /*width: 20vh;*/
+  margin: 1vh;
+  color: darkslategrey;
+
+}
+
+.bold-font{
+  font-family: 'Lato Black';
+}
+
+.font{
+  font-family: 'Lato';
+}
+
+.font-light{
+  font-family: 'Lato Light';
+}
+
+.main-color{
+  color: darkslategrey;
+}
+.third-color{
+  color: #7E6F88;
+}
+
+.second-color{
+  color: #ABC357;
+}
+
+.error-color{
+  color: indianred;
+}
+.link-color{
+  color: #5BB0D9;
+}
+.success-color{
+  color: darkslateblue;
 }
 

@@ -1,11 +1,8 @@
 import Button from '@mui/material/Button';
+import {FormControl, FormHelperText} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -19,25 +16,22 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import banner from './Banner.png';
 import logo from './logo_app.png'
 import './register-login.css';
-import {FormControl} from "@mui/material";
-import {grey} from "@mui/material/colors";
-
-
+import {fetchRegister} from "../api/api";
 
 const userSchema = object({
-
     name: string().max(15, 'Max 15 marks').required('Name is requied'),
     username: string().max(15, 'Max 15 marks').required('Username is requied'),
-    password: string().min(6).max(10).required('Password is requied'),
+    password: string().min(6, 'Min 6 marks').max(15, 'Max 15 marks').required('Password is requied'),
     check: boolean().oneOf([true], "You must accept the terms and conditions"),
-
 })
 
 export default function Register() {
-
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [registerErrors, setRegisterErrors] = useState({});
+    const {register, handleSubmit} = useForm();
+    const [isRegisterSuccess, setIsRegisterSuccess] = useState();
+    const [registerSuccess, setRegisterSuccess] =  useState();
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -45,155 +39,104 @@ export default function Register() {
         event.preventDefault();
     };
 
-
     let navigate = useNavigate();
-    const [formErrors, setFormErrors] = useState({});
-    const {register, handleSubmit} = useForm();
 
-    const [isRegisterSuccess, setIsRegisterSuccess] = useState();
-    const [RegisterSuccess, setRegisterSuccess] = useState(false);
-    const [password, setPassword] = useState();
-
-
-    const executeRegister = async (formValues) => {
-
-        fetch('http://localhost:3030/register', {
-            method: 'POST',
-            body: JSON.stringify(formValues),
-            headers: {'Content-Type': 'application/json'},
-
-        }).then(response => response.json())
-            .then(jsondata => {
-
-                if (jsondata.message === ('User registered successfully')) {
-                    setIsRegisterSuccess('Your account is created');
-                    setRegisterSuccess(true);
-                } else {
-                    setIsRegisterSuccess(jsondata.message);
-                }
-
-            })
-
+    const handleChange = (event) => {
+        const value = event.target.value;
+        setPassword(value);
     }
 
-
-    const handleRegister = async (formValues) => {
-
-        const isFormValid = await userSchema.isValid(formValues, {abortEarly: false})
+    const handleRegister = async (registerValues) => {
+        const isFormValid = await userSchema.isValid(registerValues, {abortEarly: false})
 
         if (isFormValid) {
-            setFormErrors({});
-            await executeRegister(formValues);
+            setRegisterErrors({});
+            await executeRegister(registerValues);
 
         } else {
-            userSchema.validate(formValues, {abortEarly: false})
+            userSchema.validate(registerValues, {abortEarly: false})
                 .catch((err) => {
 
                     let errors = [];
                     err.inner.forEach(error => {
                         errors[error.path] = error.errors;
                     })
-                    setFormErrors(errors);
+                    setRegisterErrors(errors);
                 })
-
         }
     }
 
+    const executeRegister = async (registerValues) => {
+        const register = await fetchRegister(registerValues);
+
+        if (register.message === ('User registered successfully')) {
+            setIsRegisterSuccess('Your account is created');
+            setRegisterSuccess(true);
+        } else {
+            setIsRegisterSuccess(register.message);
+        }
+    }
 
     return (
         <div className={'register-page'}>
-            <Box sx={{width: '80%', display: 'grid', margin: 'auto'}}>
-                <img src={logo} alt={'logo'} className={'logo'} style={{alignContent: "start"}}/>
-                <Grid container
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="center"
-                      style={{background: 'white'}}
-                >
-                    <Grid item xs={5}>
-                        <div className={'form'}>
+            <div className={'container'}>
 
+                <div className={'logo-area'}>
+                    <img src={logo} alt={'logo'} className={'logo'}/>
+                </div>
 
-                            <h1 style={{color: "darkslategrey", paddingBottom: "0vh", marginBottom: "0vh"}}>Create an account</h1>
-                            <h3 style={{color: "darkslategrey", paddingTop: "0vh", marginTop: "0.3vh", marginBottom: "4vh", fontFamily: "Lato"}}>
-                                Let’s get started for <span style={{color: '#ABC357'}}>free</span>.</h3>
-
-                            {RegisterSuccess
-                                ? <div>
-                                    <h3 style={{color: 'blue'}} className="error-serwer">{isRegisterSuccess}</h3>
-                                    <Button variant="contained" type={'button'} style={{color: '#ABC357'}}
-                                            onClick={() => {
-                                                navigate("/login")
-                                            }}>Login</Button>
-                                </div>
-                                : <form onSubmit={handleSubmit(handleRegister)} className='form'>
-                                    <h3 style={{color: "darkslategrey", fontFamily: 'Lato Black'}}>Name:</h3>
-
-                                    {formErrors.name
-                                        ? <TextField
-                                            sx={{ width: '55ch' }}
-                                            error
-                                            id="outlined-error-helper-text"
-                                            label="Error"
-                                            defaultValue="name"
-                                            helperText={formErrors.name}
-                                        />
-                                        : <TextField
-                                            sx={{ width: '55ch' }}
-                                            id="outlined-basic"
-                                            label="Enter name"
-                                            variant="outlined"
-                                            type='text'
-                                            {...register('name')}
-                                        />
-                                    }
-
-
-                                    <h3 style={{color: "darkslategrey", fontFamily: 'Lato Black'}}>Username:</h3>
-
-                                    {formErrors.username
-                                        ? <TextField
-                                            sx={{ width: '55ch' }}
-                                            error
-                                            id="outlined-error-helper-text"
-                                            label="Error"
-                                            defaultValue="username"
-                                            helperText={formErrors.username}
-                                        />
-                                        : <TextField
-                                            sx={{ width: '55ch' }}
-                                            id="outlined-basic"
-                                            label="Enter username"
-                                            variant="outlined"
-                                            type='text'
-                                            {...register('username')}
-                                        />
-                                    }
-
-
-                                    {/*<input*/}
-                                    {/*    id={'username'}*/}
-                                    {/*    type='text'*/}
-                                    {/*    placeholder='Enter username'*/}
-                                    {/*    className='contact-username'*/}
-                                    {/*    {...register('username')}*/}
-                                    {/*/>*/}
-                                    {/*<p style={{color: 'red'}} className="error">{formErrors.username}</p>*/}
-
-
-                                    <h3 style={{color: "darkslategrey", fontFamily: 'Lato Black'}}>Password:</h3>
-
-                                    <FormControl sx={{ width: '55ch' }} variant="outlined">
-                                        <InputLabel htmlFor="outlined-adornment-password" style={{color: "darkslategrey", alignItems: "flex-start"}}>Password</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-password"
-                                            label="Enter password"
-                                            type={showPassword ? 'text' : 'password'}
-                                            endAdornment={
+                <div className={'form-area'}>
+                    <h1 className={'main-color title-padding font wordspacing marginbottom'}>
+                        Create an account
+                    </h1>
+                    <h4 className={'main-color title-padding font wordspacing marginbottom'}>
+                        Let’s get started for <span className={'second-color'}>free</span>.
+                    </h4>
+                    <br/>
+                    {registerSuccess ?
+                        <div className={'form-area-register-success'}>
+                            <h4 className={'second-color'}>Your account is created successfully.</h4>
+                        </div>
+                        : <form onSubmit={handleSubmit(handleRegister)} className='form'>
+                            <div className={'inputs'}>
+                                <h4 className={'main-color font marginbottom'}>Name:</h4>
+                                <TextField
+                                    sx={{width: '100%'}}
+                                    id="outlined-basic1"
+                                    label="Enter name"
+                                    variant="outlined"
+                                    type='text'
+                                    error={!!registerErrors.name}
+                                    helperText={registerErrors ? registerErrors.name : null}
+                                    {...register('name')}
+                                />
+                                <h4 className={'main-color font marginbottom'}>Username:</h4>
+                                <TextField
+                                    sx={{width: '100%'}}
+                                    id="outlined-basic2"
+                                    error={!!registerErrors.username}
+                                    helperText={registerErrors ? registerErrors.username : null}
+                                    label="Enter username"
+                                    variant="outlined"
+                                    type='text'
+                                    {...register('username')}
+                                />
+                                <h4 className={'main-color font marginbottom'}>Password:</h4>
+                                <FormControl sx={{width: '100%'}} variant="outlined" onChange={handleChange}>
+                                    <TextField
+                                        name="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        error={!!registerErrors.password}
+                                        id="outlined-error-helper-text"
+                                        label="Enter password"
+                                        helperText={registerErrors ? registerErrors.password : null}
+                                        value={password}
+                                        InputProps={{
+                                            endAdornment: (
                                                 <InputAdornment position="end">
                                                     <IconButton
+                                                        className={'button-eye'}
                                                         aria-label="toggle password visibility"
-                                                        label="Enter password"
                                                         onClick={handleClickShowPassword}
                                                         onMouseDown={handleMouseDownPassword}
                                                         edge="end"
@@ -201,44 +144,48 @@ export default function Register() {
                                                         {showPassword ? <Visibility/> : <VisibilityOff/>}
                                                     </IconButton>
                                                 </InputAdornment>
-                                            }
-                                            {...register('password')}
-                                        />
-                                    </FormControl>
+                                            )
+                                        }}
+                                        {...register('password')}
+                                    />
+                                </FormControl>
+                                <PasswordStrengthBar password={password}/>
+                                <FormControlLabel control={<Checkbox defaultChecked color="success"/>}
+                                                  label="I agree to all term"
+                                                  className={'title-padding'}
+                                                  {...register('check')} sx={{color: 'grey'}}
+                                />
+                                <FormHelperText style={{color: '#d32f2f'}}>{registerErrors.check}</FormHelperText>
+                            </div>
 
-                                    <PasswordStrengthBar style={{width: '55ch'}} password={password}/>
-
-                                    {/*<input id={'check'} type="checkbox"*/}
-                                    {/*       className='contact-check' {...register('check')}/>*/}
-                                    {/*<label>I agree to all term </label>*/}
-
-                                    <FormControlLabel control={<Checkbox defaultChecked color="success"/>} label="I agree to all term"
-                                                      {...register('check')} sx={{color: 'grey'}}/>
-
-                                    <p style={{color: 'red'}} className="error">{formErrors.check}</p>
-                                    <br></br>
-                                    <div className='bottomform'>
-                                    <Button variant="contained" type={'submit'}
-                                            style={{background: '#ABC357', padding: 10, width: '33ch' }}>Create an account</Button>
-                                    <p style={{color: 'red'}} className="error-serwer">{isRegisterSuccess}</p>
-                                    <h4 style={{color: "darkslategrey", fontFamily: 'Lato Black'}}>Already have an account? <a href="/login" style={{color: '#5BB0D9'}}>Log in<CallMadeIcon
-                                        fontSize={"small"}/></a></h4>
-                                </div>
-                                </form>}
-
+                        <div className={'submit'}>
+                            <Button variant="contained" type={'submit'}>
+                                Create an account
+                            </Button>
+                            <h5 className={'main-color font title-padding'}> Do you already have an account?&nbsp;
+                                <a href="/login" className={'link-color title-padding'}>
+                                     Log in <CallMadeIcon fontSize={"small"}/>
+                                </a>
+                            </h5>
+                            <h5 className="error-server error-color">{isRegisterSuccess}</h5>
                         </div>
-                    </Grid>
-                <Grid item xs={4}>
-                <div className={'banner'}>
 
-                    <img src={banner} alt={'banner'}/>
+                        </form>}
 
                 </div>
-                </Grid>
-            </Grid>
-            </Box>
+
+                <div className={'button-area'}>
+                    <Button variant="contained" type={'button'} onClick={() => {
+                        navigate("/login")
+                    }}>Log in</Button>
+                </div>
+
+                <div className={'picture-area'}>
+                    <img src={banner} alt={'banner'}/>
+                </div>
+            </div>
         </div>
-    );
+    )
 }
 
 

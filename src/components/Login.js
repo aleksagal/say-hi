@@ -1,50 +1,41 @@
 import Button from '@mui/material/Button';
-import React, { useState } from "react";
-import ReactDOM from 'react-dom';
-import { useForm } from "react-hook-form";
-import { object, string } from "yup";
-import {  useNavigate  } from "react-router-dom";
-import Profile from "./Profile";
+import React, {useState} from "react";
+import {useForm} from "react-hook-form";
+import {object, string} from "yup";
+import {useNavigate} from "react-router-dom";
+import banner from "./Banner.png";
+import './register-login.css';
+import '../App.css';
+import logo from './logo_app.png'
+import WavingHandIcon from '@mui/icons-material/WavingHand';
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {FormControl} from "@mui/material";
+import CallMadeIcon from "@mui/icons-material/CallMade";
+import useApp from "../api/AppContext";
+import {fetchProfile, fetchLogin} from "../api/api";
+import {FormHelperText} from "@mui/material";
+
+const loginSchema = object({
+    username: string().required('Username is requied'),
+    password: string().required('Password is requied'),
+})
 
 export default function Login() {
-
     let navigate = useNavigate();
-
-    const loginSchema = object({
-
-        username: string().required('Username is requied'),
-        password: string().required('Password is requied'),
-
-    })
-
-    const [LoginErrors, setLoginErrors] = useState({});
+    const [loginErrors, setLoginErrors] = useState({});
     const [isLoginSuccess, setIsLoginSuccess] = useState();
-    const [LoginSuccess, setLoginSuccess] = useState();
     const {register, handleSubmit} = useForm();
+    const [showPassword, setShowPassword] = useState(false);
+    const {setUser} = useApp();
 
-    const executeLogin = async (loginValues) => {
-
-        fetch('http://localhost:3030/login', {
-            method: 'POST',
-            body: JSON.stringify(loginValues),
-            headers: {'Content-Type': 'application/json'},
-
-        }).then(response => response.json())
-            .then(jsondata => {
-                console.log(jsondata);
-                if (jsondata.message === ('User logged in successfully')) {
-                    setIsLoginSuccess("Logged in");
-                    setLoginSuccess(true);
-                    localStorage.setItem("accessToken", jsondata.token);
-                } else {
-                    setIsLoginSuccess('Invalid password or username');
-                }
-
-            })
-
-        // console.log(localStorage.getItem("accessToken"))
-
-    }
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const handleLogin = async (loginValues) => {
         const isLoginValid = await loginSchema.isValid(loginValues, {abortEarly: false});
@@ -52,6 +43,7 @@ export default function Login() {
         if (isLoginValid) {
 
             setLoginErrors({});
+            setIsLoginSuccess();
             await executeLogin(loginValues);
 
         } else {
@@ -62,52 +54,106 @@ export default function Login() {
                     err.inner.forEach(error => {
                         errors[error.path] = error.errors;
                     })
+                    setIsLoginSuccess();
                     setLoginErrors(errors);
                 })
         }
-
     }
 
+    const executeLogin = async (loginValues) => {
+        const login = await fetchLogin(loginValues);
+
+        if (login.message === ('User logged in successfully')) {
+            localStorage.setItem("accessToken", login.token);
+            const profile = await fetchProfile();
+            setUser(profile);
+            navigate("/home");
+        } else {
+            setIsLoginSuccess('Invalid password or username');
+        }
+    }
 
     return (
-        <div>
-            <h3 style={{color: 'darkblue'}}>Sign in</h3>
-            <hr></hr>
-            {LoginSuccess
-                ? <div>
-                    <h3 style={{color: 'blue'}} >{isLoginSuccess}</h3>
-                    <Button variant="contained" type={'button'} onClick={()=> {navigate("/profile")}}>See the profile</Button>
+        <div className={'login-page'}>
+            <div className={'container'}>
 
+                <div className={'logo-area'}>
+                    <img src={logo} alt={'logo'} className={'logo'}/>
                 </div>
-                : <form onSubmit={handleSubmit(handleLogin)}>
-                    <h3>Username:</h3>
-                        <input
-                            id={'username'}
-                            type='text'
-                            placeholder='Enter username'
-                            {...register('username')}
-                            className='login-username'
-                        />
-                        <p style={{color: 'red'}} className="error">{LoginErrors.username}</p>
 
-
-                    <h3>Password:</h3>
-                    <input
-                        id={'password'}
-                        type='password'
-                        placeholder='Enter password'
-                        {...register('password')}
-                        className='login-password'
-                    />
-                    <p style={{color: 'red'}} className="error">{LoginErrors.password}</p>
-
+                <div className={'form-area'}>
+                    <h1 className={'main-color title-padding font wordspacing'}>Login</h1>
+                    <h4 className={'main-color title-padding font wordspacing marginbottom'}>
+                        Hi, welcome back <span className={'second-color'}><WavingHandIcon/></span>.</h4>
                     <br></br>
-                    <Button variant="contained" type={'submit'}>Login</Button>
-                    <h3 style={{color: 'red'}} >{isLoginSuccess}</h3>
-                    <h3>Do you not have an account? <a href="/register">Create an account</a></h3>
-                </form>}
+                    <form onSubmit={handleSubmit(handleLogin)}>
+                        <div className={'inputs'}>
+                            <h4 className={'main-color font marginbottom'}>Username:</h4>
+                            <TextField
+                                sx={{width: '100%'}}
+                                id="outlined-basic"
+                                label="Enter username"
+                                variant="outlined"
+                                type='text'
+                                error={!!loginErrors.username || !!isLoginSuccess}
+                                helperText={loginErrors ? loginErrors.username : null}
+                                {...register('username')}
+                            />
+
+                            <h4 className={'main-color font marginbottom'}>Password:</h4>
+                            <FormControl sx={{width: '100%'}} variant="outlined"
+                                         error={!!loginErrors.password || !!isLoginSuccess}>
+                                <TextField
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    error={!!loginErrors.password || !!isLoginSuccess}
+                                    id="outlined-error-helper-text"
+                                    label="Enter password"
+                                    helperText={loginErrors ? loginErrors.password : null}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                    {...register('password')}
+                                />
+                                <FormHelperText style={{color: 'palette.error.dark'}}>{isLoginSuccess}</FormHelperText>
+                            </FormControl>
+                        </div>
+
+                        <div className={'submit'}>
+                            <br></br>
+                            <Button variant="contained" type={'submit'}>Login</Button>
+                            <h5 className={'main-color font title-padding'}>Do you not have an account?&nbsp;
+                                <a href="/register" className={'success-color marginbottom'}>
+                                    Create an account <CallMadeIcon fontSize={"small"}/>
+                                </a>
+                            </h5>
+                        </div>
+                    </form>
+                </div>
+
+                <div className={'button-area'}>
+                    <Button variant="contained" type={'button'} onClick={() => {
+                        navigate("/register")
+                    }}>
+                        Sign up
+                    </Button>
+                </div>
+
+                <div className={'picture-area'}>
+                    <img src={banner} alt={'banner'}/>
+                </div>
+            </div>
         </div>
-
-
     )
 }

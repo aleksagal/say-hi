@@ -1,19 +1,19 @@
 import React, {useState} from "react";
+import '../App.css';
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
-import {useForm} from "react-hook-form";
-import {object, string} from "yup";
-import {alpha, styled} from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Modal from "@mui/material/Modal";
+import {createNewPost} from "../api/api";
 import useApp from "../api/AppContext";
-import {fetchEditProfile} from "../api/api";
+import {alpha, styled} from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import PersonSharpIcon from '@mui/icons-material/PersonSharp';
-import IconButton from "@mui/material/IconButton";
+import {object, string} from "yup";
 
 const style = {
     position: 'absolute',
@@ -83,84 +83,83 @@ const BootstrapInput = styled(InputBase)(({theme}) => ({
     },
 }));
 
-const editSchema = object({
-    name: string().max(15, 'Max 15 marks').required('Name is requied'),
-    username: string().max(15, 'Max 15 marks').required('Username is requied'),
+const postSchema = object({
+    title: string().max(20, 'Max 20 marks').required('Title is requied'),
+    content: string().max(40, 'Max 40 marks').min(10, 'Min 10 marks').required('Content is requied'),
 });
 
-export default function Profile() {
-    const {user, setUser} = useApp();
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const {register, handleSubmit, formState: {errors}} = useForm({
-        resolver: yupResolver(editSchema),
+export default function CreatePost() {
+    const [openModal, setOpenModal] = useState(false);
+    const {group} = useApp();
+    const handleOpen = () => {
+        setOpenModal(true);
+        reset();
+    }
+    const handleClose = () => {
+        setOpenModal(false);
+    }
+    const {register, handleSubmit, control, reset, formState: {errors}} = useForm({
+        resolver: yupResolver(postSchema),
     });
 
-    const saveProfile = async (updateProfileValues) => {
-        if ((user.name === updateProfileValues.name) && (user.username === updateProfileValues.username)) {
-            setOpen(false);
-            return null;
+    const createPost = async (postValues) => {
+        postValues.groupId = group._id;
+        const isPostCreated = await createNewPost(postValues);
+        if (isPostCreated.message === ('Post successfully created')) {
+            console.log('Your post is created');
+            setOpenModal(false);
+
         } else {
-            const editProfile = await fetchEditProfile(updateProfileValues);
-            if (editProfile.message === ('User editted')) {
-                setUser(editProfile.user);
-                setOpen(false);
-            } else {
-                console.log('error');
-                setOpen(false);
-            }
+            console.log(isPostCreated.message);
+            setOpenModal(false);
         }
     }
 
     return (
-        <div className="profile">
-            <IconButton onClick={handleOpen}> <PersonSharpIcon/> </IconButton>
+        <div>
+            <Button onClick={handleOpen}> <AddIcon fontSize={"small"}/> Add new post</Button>
             <Modal
-                open={open}
+                open={openModal}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <form onSubmit={handleSubmit(saveProfile)} className='form'>
+                    <form onSubmit={handleSubmit(createPost)} className='form'>
                         <Typography id="modal-modal-title" variant="h6" component="h3" className={'main-color'}>
-                            Edit profile
+                            Create a post
                         </Typography>
-                        <br></br>
+                        <br/>
                         <FormControl variant="standard">
                             <InputLabel shrink htmlFor="bootstrap-input">
-                                Name:
+                                Title:
                             </InputLabel>
                             <BootstrapInput
-                                name="name"
-                                defaultValue={user.name}
-                                id="bootstrap-input"
-                                {...register('name')}
+                                control={control}
+                                {...register('title')}
                             />
                         </FormControl>
                         <h5 className="error-server error-color font">
-                            {errors.name && <p>{errors.name.message}</p>}
+                            {errors.title && <p>{errors.title.message}</p>}
                         </h5>
 
                         <FormControl variant="standard">
                             <InputLabel shrink htmlFor="bootstrap-input">
-                                Username:
+                                Content:
                             </InputLabel>
                             <BootstrapInput
-                                name="username"
-                                defaultValue={user.username}
-                                id="bootstrap-input"
-                                {...register('username')}
+                                control={control}
+                                {...register('content')}
                             />
                         </FormControl>
+                        < br/>
                         <h5 className="error-server error-color font">
-                            {errors.username && <p>{errors.username.message}</p>}
+                            {errors.content && <p>{errors.content.message}</p>}
                         </h5>
-                        <Button variant="contained" type={'submit'}> Save</Button>
+                        <Button variant="contained" type={'submit'}> Add </Button>
                     </form>
                 </Box>
             </Modal>
         </div>
-    );
+    )
 }
