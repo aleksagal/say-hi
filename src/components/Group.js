@@ -7,6 +7,7 @@ import Diversity3Icon from "@mui/icons-material/Diversity3";
 import EditGroup from "./EditGroup";
 import DeleteGroup from "./DeleteGroup";
 import GroupMembers from "./GroupMembers";
+import QRCodeGenerator from "./QRCodeGenerator";
 
 const iconMapping = {
     EscalatorWarningIcon: <EscalatorWarningIcon/>,
@@ -20,10 +21,10 @@ export default function Group() {
     return (
         <div className="group">
             <div className={'title'}>
-                <p style={{color: '#7E6F88', margin: '0'}}>
+                <p style={{color: 'darkslategrey', margin: '0'}}>
                     {group ? iconMapping[group.icon] : <EscalatorWarningIcon/>}
                 </p>
-                <h3 className={'main-color font'} style={{margin: '0.3rem', color: '#7E6F88'}}>
+                <h3 className={'main-color font'} style={{margin: '0.3rem', color: 'darkslategrey'}}>
                     {group ? group.groupName : 'Group Name'}
                 </h3>
                 <h5 className={'main-color font-light'} style={{margin: '0'}}>
@@ -34,6 +35,7 @@ export default function Group() {
                 <EditGroup/>
                 <DeleteGroup/>
                 <GroupMembers/>
+                <QRCodeGenerator />
             </div>
         </div>
     );

@@ -1,6 +1,4 @@
 import React, {useEffect} from "react";
-import Paper from '@mui/material/Paper';
-import {styled} from '@mui/material/styles';
 import './home.css';
 import '../App.css';
 import Grid from '@mui/material/Grid';
@@ -10,11 +8,8 @@ import {fetchProfile} from "../api/api";
 import useApp from "../api/AppContext";
 import {useNavigate} from "react-router-dom";
 import MiddleBar from "./MiddleBar";
-
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: 'white',
-    borderRadius: '0.5rem'
-}));
+import {Item} from './styles';
+import Box from "@mui/material/Box";
 
 export default function Home() {
     let navigate = useNavigate();
@@ -38,29 +33,31 @@ export default function Home() {
 
     return (
         <div className={'home-page'}>
-            <Grid container spacing={3} className={'home'}>
-                <Grid item xs={3} container className={'menu'}>
+            <Box sx={{margin: {xs: 2, sm: 2, md: 2, lg: 4, xl: 4}}}>
+            <Grid container spacing={{xs: 2, sm: 2, md: 2, lg: 4, xl: 6}} className={'home'} direction="row" >
+                <Grid item xs={12} sm={4} md={3} lg={3} container className={'leftBar'}>
                     <Grid item xs={12}>
-                        <Item>
+                        <Item sx={{padding: {xs: 0, sm: 0, md: 2, lg: 3}}}>
                             <LeftBar />
                         </Item>
                     </Grid>
                 </Grid>
-                <Grid item xs={6} container className={'main'}>
+                <Grid item xs={12} sm={8} md={6} lg={6} container className={'main'}>
                     <Grid item xs={12} className={'posts'}>
-                        <Item>
+                        <Item sx={{padding: {xs: 0, sm: 0, md: 2, lg: 3}}}>
                             <MiddleBar/>
                         </Item>
                     </Grid>
                 </Grid>
-                <Grid item xs={3} container className={'sidebar'}>
+                <Grid item xs={12} sm={4} md={3} lg={3} container className={'rightBar'} sx={{direction: {xs: 'columns'}}}>
                     <Grid item xs={12} className={'sidebar-1'}>
-                        <Item>
+                        <Item sx={{padding: {xs: 0, sm: 0, md: 2, lg: 3}}}>
                             <RightSidebar/>
                         </Item>
                     </Grid>
                 </Grid>
             </Grid>
+            </Box>
         </div>
     );
 }

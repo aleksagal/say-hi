@@ -1,127 +1,57 @@
-.home-page{
-   /*align-items: center;*/
-   /* height: 100vh;*/
-    margin: 1rem;
-}
-
-/*.home {*/
-/*    margin: 2rem;*/
-/*    */
-/*}*/
-.home-container{
-    /*display: grid;*/
-    /*grid-template-columns: 0.7fr 1fr 1fr 1.3fr;*/
-    /*grid-template-rows: repeat(4, 1fr);*/
-    /*grid-gap: 1rem;*/
-    /*height: 100vh;*/
-    /*margin: 2rem;*/
-    /*align-items: center;*/
-    /*justify-items: center;*/
-    /*background: none;*/
-
-}
-
-.menu{
-    /*grid-area: 1/ 1/ 5/ 2;*/
-    /*background-color: white;*/
-    /*border-radius: 30px;*/
-    /*height: 100%;*/
-    /*text-align: left;*/
-    /*padding: 5%;*/
-}
-
-.main-info-1{
-    /*grid-area: 1/ 2/ 2/ 4;*/
-    /*background-color: white;*/
-    /*border-radius: 30px;*/
-    /*height: 100%;*/
-}
-
-.main-info-2{
-    /*grid-area: 2/ 2/ 3/ 4;*/
-    /*background-color: white;*/
-    /*border-radius: 30px;*/
-    /*height: 100%;*/
-}
-
-.main-info-3{
-    /*grid-area: 3/ 2/ 4/ 4;*/
-    /*background-color: white;*/
-    /*border-radius: 30px;*/
-    /*height: 100%;*/
-}
-
-.main-button{
-    /*grid-area: 4/ 2/ 5/ 4;*/
-    /*height: 100%;*/
-    /*text-align: left;*/
-}
-
-.sidebar{
-   margin: 3vh;
-}
-
-.notifications{
-    /*grid-area: 3/ 4/ 5/ 5;*/
-    /*border-radius: 30px;*/
-    /*height: 100%;*/
-}
-
+/*menu*/
 .main button{
     background-color: #ABC357;
     padding: 1vh;
     width: 20vh;
     margin: 1vh;
     color: darkslategrey;
-
 }
 
 .main button:hover{
     background: #CEBCD2;
 }
 
-.menu button{
+.leftBar button{
     background-color: #ABC357;
-    padding: 1vh;
-    width: 20vh;
-    margin: 1vh;
+    padding: 0.5rem 1rem;
+    width: auto;
+    max-width: 240px;
+    margin: 0.5rem;
     color: darkslategrey;
-    /*justifyContent: "flex-start";*/
 }
 
-.menu button:hover {
-    background: #CEBCD2;
+.leftBar button:hover {
+    background-color: #CEBCD2;
+    padding: 0.5rem 1rem;
+    width: auto;
+    max-width: 240px;
+    margin: 0.5rem;
+    color: darkslategrey;
 }
-
-/*.Mui-selected {*/
-/*    font-family: 'Lato Black';*/
-/*    background: #F4F2DC;*/
-/*    color: blueviolet;*/
-/*    !*padding: 1vh;*!*/
-/*    !*margin: 1vh;*!*/
-/*    !*width: 20vh;*!*/
-/*    !*border-radius: 0.5rem;*!*/
-/*    !*color: black;*!*/
-/*}*/
 
 .align-left {
     display: flex !important;
     justify-content: left !important;
 }
+/*posts*/
+.pagination button {
+    background-color: transparent;
+    width: 0;
+    color: darkslategrey;
+}
 
 /*profile*/
 .title{
     display: grid;
-    align-items: center;  /* Vertical centering */
+    align-items: center;
     text-align: center;
     justify-content: center;
-    /*background: #F4F2DC;*/
     padding: 1rem 1rem;
     border-radius: 0.4rem;
 }
 .profile button{
-    display: flex;  /* Using flex for centering */
-    align-items: center;  /* Vertical centering */
+    display: flex;
+    align-items: center;
     justify-content: center;
     background: darkslategray;
     padding: 1vh;
@@ -133,11 +63,41 @@
     background: #ABC357;
     color: #F4F2DC;
 }
-/*//showgroup*/
 
-.group {
-    display: grid;
-    place-items: center;
+.camera button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: darkslategray;
+    padding: 1vh;
+    margin: 1vh;
+    color: #ABC357;
+}
+
+.camera button:hover {
+    background: #ABC357;
+    color: #F4F2DC;
+}
+
+.location button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: darkslategray;
+    padding: 1vh;
+    margin: 1vh;
+    color: #ABC357;
+}
+
+.location button:hover {
+    background: #ABC357;
+    color: #F4F2DC;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .group button{
@@ -152,10 +112,26 @@
 }
 
 .group button:hover {
-    background: #CEBCD2;
+    background: #F3F0F3;
 }
 
 .group .button-with-icon {
     display: flex;
     align-items: center;
+}
+
+.option button{
+    background-color: transparent;
+    width: 0;
+    color: darkslategrey;
+}
+
+.option button:hover{
+    background-color: transparent;
+}
+
+.option button svg:hover{
+    background-color: #F3F0F3;
+    border-radius: 50%;
+    color: darkslategray;
 }

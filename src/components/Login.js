@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {object, string} from "yup";
 import {useNavigate} from "react-router-dom";
+import Grid from '@mui/material/Grid';
 import banner from "./Banner.png";
 import './register-login.css';
 import '../App.css';
@@ -18,6 +19,8 @@ import CallMadeIcon from "@mui/icons-material/CallMade";
 import useApp from "../api/AppContext";
 import {fetchProfile, fetchLogin} from "../api/api";
 import {FormHelperText} from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
+import {RegisterLoginBox, RegisterLoginPaper, RightUpButton} from "./styles";
 
 const loginSchema = object({
     username: string().required('Username is requied'),
@@ -75,85 +78,111 @@ export default function Login() {
 
     return (
         <div className={'login-page'}>
-            <div className={'container'}>
-
-                <div className={'logo-area'}>
-                    <img src={logo} alt={'logo'} className={'logo'}/>
-                </div>
-
-                <div className={'form-area'}>
-                    <h1 className={'main-color title-padding font wordspacing'}>Login</h1>
-                    <h4 className={'main-color title-padding font wordspacing marginbottom'}>
-                        Hi, welcome back <span className={'second-color'}><WavingHandIcon/></span>.</h4>
-                    <br></br>
-                    <form onSubmit={handleSubmit(handleLogin)}>
-                        <div className={'inputs'}>
-                            <h4 className={'main-color font marginbottom'}>Username:</h4>
-                            <TextField
-                                sx={{width: '100%'}}
-                                id="outlined-basic"
-                                label="Enter username"
-                                variant="outlined"
-                                type='text'
-                                error={!!loginErrors.username || !!isLoginSuccess}
-                                helperText={loginErrors ? loginErrors.username : null}
-                                {...register('username')}
-                            />
-
-                            <h4 className={'main-color font marginbottom'}>Password:</h4>
-                            <FormControl sx={{width: '100%'}} variant="outlined"
-                                         error={!!loginErrors.password || !!isLoginSuccess}>
-                                <TextField
-                                    name="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    error={!!loginErrors.password || !!isLoginSuccess}
-                                    id="outlined-error-helper-text"
-                                    label="Enter password"
-                                    helperText={loginErrors ? loginErrors.password : null}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <Visibility/> : <VisibilityOff/>}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                    {...register('password')}
-                                />
-                                <FormHelperText style={{color: 'palette.error.dark'}}>{isLoginSuccess}</FormHelperText>
-                            </FormControl>
-                        </div>
-
-                        <div className={'submit'}>
+            <RegisterLoginBox>
+                <RegisterLoginPaper sx={{margin: {xs: 4, sm: 6, md: 2}, padding: {xs: 4, sm: 6, md: 2},}}>
+                    <Grid container rowSpacing={1} columnSpacing={{xs: 0, sm: 0, md: 0}}
+                          columns={{xs: 8, sm: 8, md: 16}} style={{padding: '2'}}>
+                        <Grid item xs={8} style={{padding: '5%'}}>
+                            <img src={logo} alt={'logo'} className={'logo'}/>
                             <br></br>
-                            <Button variant="contained" type={'submit'}>Login</Button>
-                            <h5 className={'main-color font title-padding'}>Do you not have an account?&nbsp;
-                                <a href="/register" className={'success-color marginbottom'}>
-                                    Create an account <CallMadeIcon fontSize={"small"}/>
-                                </a>
-                            </h5>
-                        </div>
-                    </form>
-                </div>
+                            <br></br>
+                            <br></br>
+                            <div className={'form-area'}>
+                                <h1 className={'main-color font wordspacing nonemargin'}>
+                                    Login
+                                </h1>
+                                <h4 className={'main-color font wordspacing nonemargin'}>
+                                    Hi, welcome back <span className={'second-color'}><WavingHandIcon/></span>.
+                                </h4>
+                                <br></br>
 
-                <div className={'button-area'}>
-                    <Button variant="contained" type={'button'} onClick={() => {
-                        navigate("/register")
-                    }}>
-                        Sign up
-                    </Button>
-                </div>
+                                <form onSubmit={handleSubmit(handleLogin)}>
+                                    <div className={'inputs'}>
+                                        <h4 className={'main-color font marginbottom'}>Username:</h4>
+                                        <TextField
+                                            sx={{width: '100%'}}
+                                            id="outlined-basic"
+                                            label="Enter username"
+                                            variant="outlined"
+                                            type='text'
+                                            error={!!loginErrors.username || !!isLoginSuccess}
+                                            helperText={loginErrors ? loginErrors.username : null}
+                                            {...register('username')}
+                                        />
 
-                <div className={'picture-area'}>
-                    <img src={banner} alt={'banner'}/>
-                </div>
-            </div>
+                                        <h4 className={'main-color font marginbottom'}>Password:</h4>
+                                        <FormControl sx={{width: '100%'}} variant="outlined"
+                                                     error={!!loginErrors.password || !!isLoginSuccess}>
+                                            <TextField
+                                                name="password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                error={!!loginErrors.password || !!isLoginSuccess}
+                                                id="outlined-error-helper-text"
+                                                label="Enter password"
+                                                helperText={loginErrors ? loginErrors.password : null}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                                edge="end"
+                                                            >
+                                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                                                {...register('password')}
+                                            />
+                                            <FormHelperText
+                                                style={{color: 'palette.error.dark'}}>{isLoginSuccess}</FormHelperText>
+                                        </FormControl>
+                                    </div>
+                                    <div className={'submit'}>
+                                        <br></br>
+                                        <Button
+                                            variant="contained"
+                                            type={'submit'}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                margin: 'auto',
+                                                width: 'fit-content',
+                                            }}>
+                                            Login
+                                        </Button>
+                                        <h5 className={'main-color font nonemargin'}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                margin: 'auto',
+                                                width: 'fit-content'
+                                            }}>
+                                            Do you not have an account?&nbsp;
+                                            <a href="/register" className={'success-color marginbottom'}>
+                                                Create an account <CallMadeIcon fontSize={"small"}/>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                </form>
+                            </div>
+                            <RightUpButton
+                                variant="contained"
+                                startIcon={<PersonIcon/>}
+                                    onClick={() => {
+                                        navigate("/register")
+                                    }}>
+                                Sign up
+                            </RightUpButton>
+                        </Grid>
+                        <Grid item xs={8} style={{padding: '0'}} sx={{display: {xs: 'none', sm: 'none', md: 'flex'}}}>
+                            <img src={banner} alt={'banner'} style={{width: '100%', height: 'auto'}}/>
+                        </Grid>
+                    </Grid>
+                </RegisterLoginPaper>
+            </RegisterLoginBox>
         </div>
     )
 }

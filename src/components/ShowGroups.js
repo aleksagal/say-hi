@@ -1,38 +1,21 @@
 import React, {useEffect, useState} from "react";
 import List from '@mui/material/List';
 import {ListItem} from "@mui/material";
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import '../App.css';
-import {styled} from '@mui/material/styles';
 import {fetchGroups} from "../api/api";
 import useApp from "../api/AppContext";
+import {StyledListItemButton} from './styles';
 
 const iconMapping = {
     EscalatorWarningIcon: <EscalatorWarningIcon/>,
     ConnectWithoutContactIcon: <ConnectWithoutContactIcon/>,
     Diversity3Icon: <Diversity3Icon/>,
 };
-const StyledListItemButton = styled(ListItemButton)(({theme}) => ({
-    '&&.Mui-selected': {
-        backgroundColor: '#F4F2DC',
-        borderRadius: '0.4rem',
-        color: '#1A2027',
-        '&:hover': {
-            backgroundColor: '#CEBCD2',
-            borderRadius: '0.4rem',
-        },
-    },
-    '&:hover': {
-        backgroundColor: '#CEBCD2',
-        borderRadius: '0.4rem',
-    },
-
-}));
 
 export default function ShowGroups() {
     const [listGroups, setListGroups] = useState();
@@ -70,7 +53,7 @@ export default function ShowGroups() {
 
     return (
         <div>
-            <h4 className={'main-color font'} style={{justifyContent: 'left', marginLeft: '10%'}}> Your community </h4>
+            <h3 className={'main-color font'} style={{justifyContent: 'center', }}> Your community </h3>
             <List component="nav">
                 {listGroups?.map((group, index) => {
                     return (

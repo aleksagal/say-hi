@@ -3,7 +3,6 @@ export const fetchRegister = async (formValues) => {
         method: 'POST',
         body: JSON.stringify(formValues),
         headers: {'Content-Type': 'application/json'},
-
     })
 
     return await register.json();
@@ -110,7 +109,7 @@ export const createNewPost = async (postValues) => {
     return await newPost.json();
 }
 
-export const fetchPosts = async (groupId) => {
+export const fetchPosts = async (groupId, postLimit) => {
 
     const posts = await fetch(`http://localhost:3030/groups/${groupId}/posts`, {
         method: 'GET',
