@@ -1,5 +1,5 @@
-import useApp from "../api/AppContext";
-import {fetchEditGroup} from "../api/api";
+import useApp from "../../api/AppContext";
+import {fetchEditGroup} from "../../api/api";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -19,7 +19,7 @@ import Radio from "@mui/material/Radio";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
-import {BoxStyle, StyledListItemButton, InputStyle} from './styles';
+import {BoxStyle, StyledListItemButton, InputStyle} from '../styles';
 
 const groupSchema = object({
     groupName: string().max(20, 'Max 20 marks').required('Group name is requied'),

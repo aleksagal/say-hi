@@ -6,10 +6,10 @@ import ListItemText from '@mui/material/ListItemText';
 import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import '../App.css';
-import {fetchGroups} from "../api/api";
-import useApp from "../api/AppContext";
-import {StyledListItemButton} from './styles';
+import '../../App.css';
+import {fetchGroups} from "../../api/api";
+import useApp from "../../api/AppContext";
+import {StyledListItemButton} from '../styles';
 
 const iconMapping = {
     EscalatorWarningIcon: <EscalatorWarningIcon/>,

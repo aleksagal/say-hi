@@ -13,13 +13,13 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {boolean, object, string} from "yup";
 import PasswordStrengthBar from 'react-password-strength-bar';
-import banner from './Banner.png';
-import logo from './logo_app.png'
+import banner from '../../Banner.png';
+import logo from '../../logo_app.png'
 import './register-login.css';
-import {fetchRegister} from "../api/api";
+import {fetchRegister} from "../../api/api";
 import LoginIcon from '@mui/icons-material/Login';
 import Grid from "@mui/material/Grid";
-import {RegisterLoginBox, RegisterLoginPaper, RightUpButton} from "./styles";
+import {RegisterLoginBox, RegisterLoginPaper, RightUpButton} from "../styles";
 
 const userSchema = object({
     name: string().max(15, 'Max 15 marks').required('Name is requied'),
@@ -180,7 +180,7 @@ export default function Register() {
                                                 Create an account
                                             </Button>
                                             <h5 className={'main-color font nonemargin'}
-                                                style={{
+                                                sx={{
                                                     display: 'flex',
                                                     justifyContent: 'center',
                                                     margin: 'auto',

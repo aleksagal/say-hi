@@ -4,7 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import {ListItem} from "@mui/material";
-import {BoxStyle, StyledListItemButton} from './styles';
+import {BoxStyle, StyledListItemButton} from '../styles';
 
 export default function GroupMembers() { //TODO component in progress
     // const {group, setGroup} = useApp();

@@ -1,17 +1,17 @@
 import './App.css';
-import Register from './components/Register';
-import Login from "./components/Login";
-import RightSidebar from "./components/RightSidebar";
-import Profile from "./components/Profile";
-import Home from "./components/Home";
+import Register from './components/user/Register';
+import Login from "./components/user/Login";
+import RightSidebar from "./components/home/RightSidebar";
+import Profile from "./components/user/Profile";
+import Home from "./components/home/Home";
 import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
 import Button from "@mui/material/Button";
 import React from "react";
-import ShowGroups from "./components/ShowGroups";
-import CreateGroup from "./components/CreateGroup";
+import ShowGroups from "./components/group/ShowGroups";
+import CreateGroup from "./components/group/CreateGroup";
 import {AppProvider} from "./api/AppContext";
 import LogoutIcon from '@mui/icons-material/Logout';
-import Camera from "./components/Camera";
+import Camera from "./components/camera/Camera";
 
 function App() {
     let navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import '../App.css';
-import {fetchPosts} from "../api/api";
-import useApp from "../api/AppContext";
+import '../../App.css';
+import {fetchPosts} from "../../api/api";
+import useApp from "../../api/AppContext";
 import {ListItem} from "@mui/material";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import ListItemText from "@mui/material/ListItemText";

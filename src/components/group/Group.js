@@ -1,13 +1,13 @@
 import React from "react";
-import '../App.css';
-import useApp from "../api/AppContext";
+import '../../App.css';
+import useApp from "../../api/AppContext";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import EditGroup from "./EditGroup";
 import DeleteGroup from "./DeleteGroup";
 import GroupMembers from "./GroupMembers";
-import QRCodeGenerator from "./QRCodeGenerator";
+import QRCodeGenerator from "../qrcode/QRCodeGenerator";
 
 const iconMapping = {
     EscalatorWarningIcon: <EscalatorWarningIcon/>,

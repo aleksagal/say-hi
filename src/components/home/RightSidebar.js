@@ -1,9 +1,9 @@
 import React from "react";
-import '../App.css';
-import Profile from "./Profile";
-import Group from "./Group";
-import Camera from "./Camera";
-import LocationFinder from "./LocationFinder";
+import '../../App.css';
+import Profile from "../user/Profile";
+import Group from "../group/Group";
+import Camera from "../camera/Camera";
+import LocationFinder from "../userlocation/LocationFinder";
 
 export default function RightSidebar() {
     return (

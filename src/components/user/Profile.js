@@ -5,14 +5,14 @@ import {object, string} from "yup";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Modal from "@mui/material/Modal";
-import useApp from "../api/AppContext";
-import {fetchEditProfile} from "../api/api";
+import useApp from "../../api/AppContext";
+import {fetchEditProfile} from "../../api/api";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import {yupResolver} from "@hookform/resolvers/yup";
 import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import IconButton from "@mui/material/IconButton";
-import {BoxStyle, InputStyle} from './styles';
+import {BoxStyle, InputStyle} from '../styles';
 
 const editSchema = object({
     name: string().max(15, 'Max 15 marks').required('Name is requied'),

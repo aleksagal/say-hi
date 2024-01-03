@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import {BoxStyle} from "./styles";
+import {BoxStyle} from "../styles";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 

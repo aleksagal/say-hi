@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import {BoxStyle} from "./styles";
+import {BoxStyle} from "../styles";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Typography from "@mui/material/Typography";
 

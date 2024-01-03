@@ -1,4 +1,4 @@
-![](src/components/logo_app.png)
+![](src/logo_app.png)
 
 The application is inspired by Facebook, but places a stronger emphasis on groups. Users can join these groups and add posts.
 

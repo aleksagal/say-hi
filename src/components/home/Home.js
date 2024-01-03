@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
 import './home.css';
-import '../App.css';
+import '../../App.css';
 import Grid from '@mui/material/Grid';
 import LeftBar from "./LeftBar";
 import RightSidebar from "./RightSidebar";
-import {fetchProfile} from "../api/api";
-import useApp from "../api/AppContext";
+import {fetchProfile} from "../../api/api";
+import useApp from "../../api/AppContext";
 import {useNavigate} from "react-router-dom";
 import MiddleBar from "./MiddleBar";
-import {Item} from './styles';
+import {Item} from '../styles';
 import Box from "@mui/material/Box";
 
 export default function Home() {

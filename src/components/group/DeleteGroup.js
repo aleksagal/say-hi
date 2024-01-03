@@ -1,4 +1,4 @@
-import useApp from "../api/AppContext";
+import useApp from "../../api/AppContext";
 import React, {useState} from "react";
 import Button from '@mui/material/Button';
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -7,8 +7,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {ListItem} from "@mui/material";
-import {deleteGroup} from "../api/api";
-import {BoxStyle, StyledListItemButton} from './styles';
+import {deleteGroup} from "../../api/api";
+import {BoxStyle, StyledListItemButton} from '../styles';
 
 export default function DeleteGroup() {
     const {group, refreshGroups, setRefreshGroups} = useApp();

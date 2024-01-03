@@ -1,8 +1,8 @@
 import React from "react";
-import '../App.css';
-import logo from "./logo_app.png";
-import CreateGroup from "./CreateGroup";
-import ShowGroups from "./ShowGroups";
+import '../../App.css';
+import logo from "../../logo_app.png";
+import CreateGroup from "../group/CreateGroup";
+import ShowGroups from "../group/ShowGroups";
 
 export default function LeftBar() {
     return (

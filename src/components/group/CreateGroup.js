@@ -12,13 +12,13 @@ import AddIcon from '@mui/icons-material/Add';
 import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import '../App.css';
+import '../../App.css';
 import {useForm} from "react-hook-form";
 import {object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {createNewGroup} from "../api/api";
-import useApp from "../api/AppContext";
-import {BoxStyle, InputStyle} from './styles';
+import {createNewGroup} from "../../api/api";
+import useApp from "../../api/AppContext";
+import {BoxStyle, InputStyle} from '../styles';
 
 const groupSchema = object({
     groupName: string().max(20, 'Max 20 marks').required('Group name is requied'),

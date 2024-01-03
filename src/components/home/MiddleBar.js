@@ -1,7 +1,7 @@
 import React from "react";
-import '../App.css';
-import CreatePost from "./CreatePost";
-import Posts from "./Posts";
+import '../../App.css';
+import CreatePost from "../post/CreatePost";
+import Posts from "../post/Posts";
 
 export default function MiddleBar() {
     return (

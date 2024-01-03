@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import React from "react";
 import Modal from "@mui/material/Modal";
-import {BoxStyle, StyledListItemButton2} from "./styles";
+import {BoxStyle, StyledListItemButton2} from "../styles";
 import Typography from "@mui/material/Typography";
 import {useState} from "react";
-import useApp from "../api/AppContext";
+import useApp from "../../api/AppContext";
 import QRCode from "react-qr-code";
 
 export default function QRCodeGenerator() {

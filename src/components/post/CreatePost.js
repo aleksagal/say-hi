@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import '../App.css';
+import '../../App.css';
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
-import {createNewPost} from "../api/api";
-import useApp from "../api/AppContext";
+import {createNewPost} from "../../api/api";
+import useApp from "../../api/AppContext";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,7 +12,7 @@ import InputLabel from "@mui/material/InputLabel";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {object, string} from "yup";
-import {BoxStyle, InputStyle} from './styles';
+import {BoxStyle, InputStyle} from '../styles';
 
 const postSchema = object({
     title: string().max(20, 'Max 20 marks').required('Title is requied'),

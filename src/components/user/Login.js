@@ -4,10 +4,10 @@ import {useForm} from "react-hook-form";
 import {object, string} from "yup";
 import {useNavigate} from "react-router-dom";
 import Grid from '@mui/material/Grid';
-import banner from "./Banner.png";
+import banner from "../../Banner.png";
 import './register-login.css';
-import '../App.css';
-import logo from './logo_app.png'
+import '../../App.css';
+import logo from '../../logo_app.png'
 import WavingHandIcon from '@mui/icons-material/WavingHand';
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -16,11 +16,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {FormControl} from "@mui/material";
 import CallMadeIcon from "@mui/icons-material/CallMade";
-import useApp from "../api/AppContext";
-import {fetchProfile, fetchLogin} from "../api/api";
+import useApp from "../../api/AppContext";
+import {fetchProfile, fetchLogin} from "../../api/api";
 import {FormHelperText} from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
-import {RegisterLoginBox, RegisterLoginPaper, RightUpButton} from "./styles";
+import {RegisterLoginBox, RegisterLoginPaper, RightUpButton} from "../styles";
 
 const loginSchema = object({
     username: string().required('Username is requied'),
@@ -154,7 +154,7 @@ export default function Login() {
                                             Login
                                         </Button>
                                         <h5 className={'main-color font nonemargin'}
-                                            style={{
+                                            sx={{
                                                 display: 'flex',
                                                 justifyContent: 'center',
                                                 margin: 'auto',
