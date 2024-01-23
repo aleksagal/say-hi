@@ -4,8 +4,13 @@ The application is inspired by Facebook, but places a stronger emphasis on group
 
 Currently the application is still in progress, some features are still not present. Also the application requires extraction of styled components to external files.
 
+![sayHI1_one](https://github.com/aleksagal/say-hi/assets/137703211/d689aea3-7363-4dd0-a219-b0b3853fc35d)
+
 #### Design
 Application was firstly designed using Figma, here is the link: ```https://www.figma.com/file/4O92T2JeSafWVgg8YOYtLw/SayHi?type=design&node-id=0%3A1&mode=design&t=jOftsMIuhPU9H52a-1```
+
+![sayHI1_two](https://github.com/aleksagal/say-hi/assets/137703211/7e3a513b-ca9b-4486-a7ba-f75141629b6d)
+
 #### Technology used
 Application was written in react, alongside with mui library.
 For state management between components I decided to implement something Redux-like with usage of ```useReducer``` and ```useContext``` hooks.
